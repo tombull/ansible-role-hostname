@@ -11,7 +11,7 @@
 
 - name: Set hostname
   hostname:
-    name: '{{ hostname }}'
+    name: '{{ hostname | default(ansible_host) }}'
   when:
     - ansible_virtualization_type != "docker"
   register: set_hostname
