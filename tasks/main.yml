@@ -1,23 +1,24 @@
 ---
 # tasks file for hostname
-- name: install requirements
+- name: Install requirements
   package:
-    name: "{{ hostname_requirements }}"
+    name: '{{ hostname_requirements }}'
     state: present
   register: hostname_install_requirements
+  when: ansible_distribution | lower != 'coreos'
   until: hostname_install_requirements is succeeded
   retries: 3
 
-- name: set hostname
+- name: Set hostname
   hostname:
-    name: "{{ hostname }}"
+    name: '{{ hostname }}'
   when:
     - ansible_virtualization_type != "docker"
   register: set_hostname
 
-- name: reboot for hostname
+- name: Reboot for hostname
   include_role:
-    name: robertdebock.reboot
+    name: reboot
   when:
     - set_hostname.changed
     - hostname_reboot | bool
