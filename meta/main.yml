@@ -43,6 +43,3 @@ galaxy_info:
     - opensuse
     - rhel
     - ubuntu
-
-dependencies:
-  - robertdebock.reboot
