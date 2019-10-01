@@ -7,6 +7,7 @@
   register: hostname_install_requirements
   when: ansible_distribution | lower != 'coreos'
   until: hostname_install_requirements is succeeded
+  become: true
   retries: 3
 
 - name: Set hostname
@@ -14,6 +15,7 @@
     name: '{{ hostname | default(ansible_host) }}'
   when:
     - ansible_virtualization_type != "docker"
+  become: true
   register: set_hostname
 
 - name: Reboot for hostname
